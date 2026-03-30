@@ -1,2 +1,3 @@
 # ctl-havoc
-High Availability Validation Orchestration and Control
+HAVOC (High Availability Validation Orchestration and Control)
+

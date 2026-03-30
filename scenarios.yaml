@@ -1,0 +1,19 @@
+compose_project: "prop-teststand"
+
+scenarios:
+  - name: "Server Pause"
+    description: "Simulate a server pause by Docker pause command"
+    fault:
+      type: docker-pause
+      service: "server"
+      duration: 10s
+    during_signals:
+      - type: http
+        url: "http://localhost:8000/health"
+        assertion: http-timeout # Unreachable during the pause, should timeout
+        within: 100s
+    after_signals:
+      - type: http
+        url: "http://localhost:8000/health"
+        assertion: http-status-200 # We expect the service to recover and return 200 OK after the pause
+        within: 2s
